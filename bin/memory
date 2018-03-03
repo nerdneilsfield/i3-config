@@ -1,0 +1,7 @@
+#!/usr/bin/bash
+
+total=`free -hl   | awk '{ if (NR==2) { print $2 }}'`
+usage=`free -hl   | awk '{ if (NR==2) { print $3 }}'`
+
+echo "$usage/$total"
+
