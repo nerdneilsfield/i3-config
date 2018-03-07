@@ -13,7 +13,7 @@ set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font Hack 12
+font pango:monospace 8
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -30,17 +30,15 @@ font Hack 12
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Shift+Return exec /usr/bin/konsole
+bindsym $mod+Shift+Return exec /usr/bin/gnome-terminal
 
 # kill focused window
 bindsym $mod+q kill
 
-#bindsym $mod+d exec --no-startup-id rofi -combi-modi drun,run -show combi
+# bindsym $mod+d exec --no-startup-id rofi -combi-modi drun,run -show combi
 bindsym $mod+d exec --no-startup-id  rofi -show run -modi "run"
 bindsym $mod+Shift+d exec --no-startup-id rofi -show window
-bindsym $mod+Shift+s exec --no-startup-id rofi -show ssh -modi "ssh"
 bindsym Mod1+Tab exec --no-startup-id rofi -show window
-
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
@@ -140,7 +138,7 @@ bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m '真他妈要退出吗?.' -b '是啊，滚吧。' 'i3-msg exit'"
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -221,20 +219,6 @@ bindsym Print exec teiler
 bindsym $mod+comma workspace prev
 bindsym $mod+period workspace next
 
-
-# Special system mode
-set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate
-mode "$mode_system" {
-  bindsym l exec --no-startup-id light-locker-command -l, mode "default"
-  bindsym e exec --no-startup-id i3-msg exit, mode "default"
-  bindsym s exec --no-startup-id systemctl suspend, mode "default"
-  bindsym h exec --no-startup-id systemctl hibernate, mode "default"
-# back to normal
-  bindsym Return mode "default"
-  bindsym Escape mode "default"
-}
-bindsym $mod+Alt_R mode "$mode_system"
-
 # Set background
 exec_always --no-startup-id nitrogen --restore
 # Capslock is control
@@ -249,65 +233,3 @@ exec --no-startup-id nm-applet
 exec --no-startup-id systemctl --user start redshift-gtk
 
 
-
-# Workspace music
-bindsym $mod+m workspace "♪"
-bindsym $mod+Shift+m move container to workspace "♪"
-
-# Set workspace name
-bindsym $mod+t exec i3-input -F 'rename workspace to %s' -P 'New name: '
-
-# Music control
-# Special music mode
-set $music Music (n) next, (b) prev, (p) play/pause
-mode "$music" {
-  bindsym n exec --no-startup-id cmus-remote --next && pkill --signal SIGRTMIN+13 i3blocks, mode "default"
-  bindsym b exec --no-startup-id cmus-remote --prev && pkill --signal SIGRTMIN+13 i3blocks, mode "default"
-  bindsym p exec --no-startup-id cmus-remote --pause && pkill --signal SIGRTMIN+13 i3blocks, mode "default"
-
-# back to normal
-  bindsym Return mode "default"
-  bindsym Escape mode "default"
-
-}
-# Emergency start cmus
-bindsym $mod+Shift+Tab exec screen -S cmus -d -m cmus && pkill --signal SIGRTMIN+13 i3blocks
-bindsym $mod+Tab mode "$music"
-
-# Compositing Manager
-exec --no-startup-id compton -b
-# Tiling Window Manager Notification Daemon
-exec --no-startup-id twmnd
-# Set color Profile
-exec --no-startup-id xcalib -d :0 /home/yash/.color/icc/Seiko.icc
-
-
-# Move workspaces between output
-bindsym $mod+y move workspace to output left
-
-# Colors
-client.focused          #c6ff00 #c6ff00 #000000 #dddddd
-client.focused_inactive #333333 #333333 #c6ff00 #ffffff
-client.unfocused        #333333 #333333 #888888 #292d2e
-client.urgent           #2f343a #900000 #ffffff #900000
-
-assign [class=".*(F|f)irefox.*"] $workspace1
-assign [class="chromium"] $workspace9
-assign [class="mpv"] $workspace10
-
-for_window [class="^.*"] border pixel 3
-for_window [class="^Floatme$"] floating enable
-for_window [class="^mpv$"] move to $workspace10
-for_window [class="^chromium$"] move to $workspace9
-for_window [class="^Vivaldi$"] move to $workspace9
-
-gaps outer 5
-gaps inner 10
-
-smart_gaps on
-smart_borders no_gaps
-
-# Startup
-exec --no-startup-id i3-msg 'workspace 2: ; exec st'
-# Start cmus in the background on a separate screen session
-exec screen -S cmus -d -m cmus && sleep 5 && pkill --signal SIGRTMIN+13 i3blocks
