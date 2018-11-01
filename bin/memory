@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 total=`free -hl   | awk '{ if (NR==2) { print $2 }}'`
 usage=`free -hl   | awk '{ if (NR==2) { print $3 }}'`
