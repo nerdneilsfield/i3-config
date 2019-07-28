@@ -245,9 +245,9 @@ exec_always --no-startup-id nitrogen --restore
 # Capslock is control
 exec --no-startup-id xmodmap ~/.Xmodmap
 # run special warning script
-exec --no-startup-id ~/.i3/bin/i3nag.sh
+exec --no-startup-id ~/.config/i3/bin/i3nag.sh
 # Wallpaper Script
-exec --no-startup-id ~/.i3/bin/wallpaper.sh
+exec --no-startup-id ~/.config/i3/bin/wallpaper.sh
 # Network Applet
 exec --no-startup-id nm-applet
 # Redshift Applet
@@ -313,7 +313,7 @@ smart_gaps on
 smart_borders no_gaps
 
 # Startup
-exec --no-startup-id i3-msg 'workspace 2: h exec st'
+#exec --no-startup-id i3-msg 'workspace 2: h exec st'
 # Start cmus in the background on a separate screen session
 exec screen -S cmus -d -m cmus && sleep 5 && pkill --signal SIGRTMIN+13 i3blocks
 exec_always --no-startup-id ~/.config/polybar/launch.sh &
