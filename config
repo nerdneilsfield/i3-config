@@ -13,7 +13,7 @@ set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font Hack 10
+font Iosevka 10
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -30,12 +30,12 @@ font Hack 10
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Shift+Return exec /usr/bin/sakura
+bindsym $mod+Shift+Return exec /usr/local/bin/alacritty
 
 # kill focused window
 bindsym $mod+q kill
 
-#bindsym $mod+d exec --no-startup-id rofi -combi-modi drun,run -show combi
+# bindsym $mod+d exec --no-startup-id rofi -combi-modi drun,run -show combi
 bindsym $mod+d exec --no-startup-id  rofi -show run -modi "run"
 bindsym $mod+Shift+d exec --no-startup-id rofi -show window
 bindsym $mod+Shift+s exec --no-startup-id rofi -show ssh -modi "ssh"
@@ -175,33 +175,34 @@ bindsym $mod+r mode "resize"
 #         status_command i3status
 # }
 
-bar {
-  i3bar_command i3bar
-  #status_command /usr/bin/i3blocks -c ~/.i3/i3blocks.conf
-  #status_command /usr/bin/i3blocks
-  #status_command ~/.i3/bin/conky-i3bar
-  #status_command /usr/local/bin/bumblebee-status -m nic disk:home load cpu  battery date time pasink pasource  -p interval=2.5 time.format="%H:%M CW %V" date.format="%a, %b %d %Y" home.path=/home -t solarized-powerline
-  status_command /usr/local/bin/bumblebee-status -m  nic  disk:home load cpu date time  -p interval=2.5 time.format="%H:%M CW %V" date.format="%a, %b %d %Y" home.path=/home  nic.exclude="lo,virbr,docker,vboxnet,veth,wifi1,wifi2,eth1,eth2"  -t solarized-powerline
-  position top
-  font pango:SauceCodePro Nerd Font 6
-  strip_workspace_numbers yes
-  separator_symbol "-"
-  workspace_buttons yes
-  bindsym button4 nop
-  bindsym button5 nop
-  tray_padding 0
-  colors {
-    statusline    #ffffff
-    background    #000000
-    separator     #000000ff
-      #                  BORDER      BACKGROUND    TEXT
-    focused_workspace   #00000000    #00000000   #c6ff00
-    inactive_workspace  #00000000    #00000000   #dddddd
-    active_workspace    #00000000    #00000000   #ffffff
-    urgent_workspace    #b71c1c      #b71c1c     #00000000
-    binding_mode        #b71c1c      #b71c1c     #00000000
-  }
-}
+#bar {
+  #i3bar_command i3bar
+  ##status_command /usr/bin/i3blocks -c ~/.i3/i3blocks.conf
+  ##status_command /usr/bin/i3blocks
+  ##status_command ~/.i3/bin/conky-i3bar
+  ##status_command /usr/local/bin/bumblebee-status -m nic disk:home load cpu  battery date time pasink pasource  -p interval=2.5 time.format="%H:%M CW %V" date.format="%a, %b %d %Y" home.path=/home -t solarized-powerline
+  #status_command /usr/local/bin/bumblebee-status -m  nic  disk:home load cpu date time  -p interval=2.5 time.format="%H:%M CW %V" date.format="%a, %b %d %Y" home.path=/home  nic.exclude="lo,virbr,docker,vboxnet,veth,wifi1,wifi2,eth1,eth2"  -t solarized-powerline
+  #position top
+  #font pango:SauceCodePro Nerd Font 6
+  #strip_workspace_numbers yes
+  #separator_symbol "-"
+  #workspace_buttons yes
+  #bindsym button4 nop
+  #bindsym button5 nop
+  #tray_padding 0
+  #colors {
+    #statusline    #ffffff
+    #background    #000000
+    #separator     #000000ff
+      ##                  BORDER      BACKGROUND    TEXT
+    #focused_workspace   #00000000    #00000000   #c6ff00
+    #inactive_workspace  #00000000    #00000000   #dddddd
+    #active_workspace    #00000000    #00000000   #ffffff
+    #urgent_workspace    #b71c1c      #b71c1c     #00000000
+    #binding_mode        #b71c1c      #b71c1c     #00000000
+  #}
+#}
+
 
 # Brightness
 bindsym XF86MonBrightnessUp exec xbacklight + 10
@@ -315,3 +316,4 @@ smart_borders no_gaps
 exec --no-startup-id i3-msg 'workspace 2: h exec st'
 # Start cmus in the background on a separate screen session
 exec screen -S cmus -d -m cmus && sleep 5 && pkill --signal SIGRTMIN+13 i3blocks
+exec_always --no-startup-id ~/.config/polybar/launch.sh &

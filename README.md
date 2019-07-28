@@ -1,10 +1,24 @@
 # i3wm - A tiling window manager
 
+## Update 2019.07
+
+- Change the status bar to polybar
+- Remove some out-of-date config
+
+
+
+
+
+-------
+
 ![desktop](https://raw.githubusercontent.com/yashsriv/i3-config/master/Screenshots/desktop.png)
 
 ![fake-busy](https://raw.githubusercontent.com/yashsriv/i3-config/master/Screenshots/fake-busy.png)
 
 ![rofi](https://raw.githubusercontent.com/yashsriv/i3-config/master/Screenshots/rofi.png)
+
+![]
+
 
 This is customized  configuration for `i3wm` a tiling window manager  fork from [yashsriv's config](https://github.com/yashsriv/i3-config")
 
