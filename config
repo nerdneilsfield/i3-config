@@ -109,7 +109,7 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
 
-set $binfolder "~/.i3/bin"
+set $binfolder "~/.config/i3/bin"
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
@@ -256,8 +256,8 @@ exec --no-startup-id systemctl --user start redshift-gtk
 
 
 # Workspace music
-bindsym $mod+m workspace "♪"
-bindsym $mod+Shift+m move container to workspace "♪"
+bindsym $mod+m workspace "music"
+bindsym $mod+Shift+m move container to workspace "music"
 
 # Set workspace name
 bindsym $mod+t exec i3-input -F 'rename workspace to %s' -P 'New name: '
@@ -280,11 +280,11 @@ bindsym $mod+Shift+Tab exec screen -S cmus -d -m cmus && pkill --signal SIGRTMIN
 bindsym $mod+Tab mode "$music"
 
 # Compositing Manager
-exec --no-startup-id compton -b
+#exec --no-startup-id compton -b
 # Tiling Window Manager Notification Daemon
-exec --no-startup-id twmnd
+#exec --no-startup-id twmnd
 # Set color Profile
-exec --no-startup-id xcalib -d :0 /home/yash/.color/icc/Seiko.icc
+#exec --no-startup-id xcalib -d :0 /home/yash/.color/icc/Seiko.icc
 
 
 # Move workspaces between output
@@ -297,14 +297,16 @@ client.unfocused        #333333 #333333 #888888 #292d2e
 client.urgent           #2f343a #900000 #ffffff #900000
 
 assign [class=".*(F|f)irefox.*"] $workspace1
-assign [class="chromium"] $workspace9
-assign [class="mpv"] $workspace10
+assign [class="chromium"] $workspace1
+assign [class="mpv"] "music"
 
-for_window [class="^.*"] border pixel 3
+for_window [class="^.*"] border pixel 2
 for_window [class="^Floatme$"] floating enable
-for_window [class="^mpv$"] move to $workspace10
-for_window [class="^chromium$"] move to $workspace9
+for_window [class="^mpv$"] move to "music"
+for_window [class="^chromium"] move to $workspace1
+for_window [class="^google-chrome-stable$"] move to $workspace1
 for_window [class="^Vivaldi$"] move to $workspace9
+for_window [class="^netease.*"] move to "music"
 
 gaps outer 5
 gaps inner 10
@@ -315,5 +317,5 @@ smart_borders no_gaps
 # Startup
 #exec --no-startup-id i3-msg 'workspace 2: h exec st'
 # Start cmus in the background on a separate screen session
-exec screen -S cmus -d -m cmus && sleep 5 && pkill --signal SIGRTMIN+13 i3blocks
+#exec screen -S cmus -d -m cmus && sleep 5 && pkill --signal SIGRTMIN+13 i3blocks
 exec_always --no-startup-id ~/.config/polybar/launch.sh &
