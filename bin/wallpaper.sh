@@ -15,8 +15,8 @@ TIMEOUT=3600
 #  sleep $TIMEOUT
 #done
 
-while [ ture ]; do
-	cd ~/Pictures 
-	nitrogen --set-auto --save "snow.jpg"
-	TIMEOUT=3600
-done
+#while [ ture ]; do
+#	cd ~/Pictures 
+#	nitrogen --set-auto --save "snow.jpg"
+#	TIMEOUT=3600
+#done
