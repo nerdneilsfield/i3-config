@@ -37,6 +37,7 @@ bindsym $mod+Shift+Return exec /usr/bin/alacritty
 
 # kill focused window
 bindsym $mod+Shift+q kill
+bindsym $mod+q kill
 
 # bindsym $mod+d exec --no-startup-id rofi -combi-modi drun,run -show combi
 bindsym $mod+d exec --no-startup-id  rofi -show run -modi "run"
@@ -46,8 +47,8 @@ bindsym Mod1+Tab exec --no-startup-id rofi -show window
 bindsym $mod+F2 exec firefox
 bindsym $mod+F3 exec pcmanfm
 # 提供淡入淡出的功能 fade in&out effects
-bindsym $mod+Shift+t exec --no-startup-id pkill compton
-bindsym $mod+Ctrl+t exec --no-startup-id compton -b
+#bindsym $mod+Shift+t exec --no-startup-id pkill compton
+#bindsym $mod+Ctrl+t exec --no-startup-id compton -b
 # Notification tool
 bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
 bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
@@ -90,7 +91,7 @@ bindsym $mod+h split h;exec notify-send 'tile horizontally'
 
 # split in vertical orientation
 bindsym $mod+v split v;exec notify-send 'tile vertically'
-bindsym $mod+q split toggle
+#bindsym $mod+q split toggle
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
@@ -275,7 +276,7 @@ exec --no-startup-id ~/.config/i3/bin/i3nag.sh
 exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec --no-startup-id nitrogen --restore; sleep 1; compton -b
+#exec --no-startup-id nitrogen --restore; sleep 1; compton -b
 # Redshift Applet
 #exec --no-startup-id systemctl --user start redshift-gtk
 # autolock
