@@ -240,17 +240,17 @@ mode "$mode_system" {
 bindsym $mod+Alt_R mode "$mode_system"
 
 # Set background
-exec_always --no-startup-id nitrogen --restore
+#exec_always --no-startup-id nitrogen --restore
 # Capslock is control
 exec --no-startup-id xmodmap ~/.Xmodmap
 # run special warning script
 exec --no-startup-id ~/.config/i3/bin/i3nag.sh
 # Wallpaper Script
-exec --no-startup-id ~/.config/i3/bin/wallpaper.sh
+#exec --no-startup-id ~/.config/i3/bin/wallpaper.sh
 # Network Applet
 exec --no-startup-id nm-applet
 # Redshift Applet
-exec --no-startup-id systemctl --user start redshift-gtk
+#exec --no-startup-id systemctl --user start redshift-gtk
 
 
 
@@ -295,17 +295,17 @@ client.focused_inactive #333333 #333333 #c6ff00 #ffffff
 client.unfocused        #333333 #333333 #888888 #292d2e
 client.urgent           #2f343a #900000 #ffffff #900000
 
-assign [class=".*(F|f)irefox.*"] $workspace1
-assign [class="chromium"] $workspace1
-assign [class="mpv"] "music"
-
-for_window [class="^.*"] border pixel 2
-for_window [class="^Floatme$"] floating enable
-for_window [class="^mpv$"] move to "music"
-for_window [class="^chromium"] move to $workspace1
-for_window [class="^google-chrome-stable$"] move to $workspace1
-for_window [class="^Vivaldi$"] move to $workspace9
-for_window [class="^netease.*"] move to "music"
+#assign [class=".*(F|f)irefox.*"] $workspace1
+#assign [class="chromium"] $workspace1
+#assign [class="mpv"] "music"
+#
+#for_window [class="^.*"] border pixel 2
+#for_window [class="^Floatme$"] floating enable
+#for_window [class="^mpv$"] move to "music"
+#for_window [class="^chromium"] move to $workspace1
+#for_window [class="^google-chrome-stable$"] move to $workspace1
+#for_window [class="^Vivaldi$"] move to $workspace9
+#for_window [class="^netease.*"] move to "music"
 
 gaps outer 5
 gaps inner 10
