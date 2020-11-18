@@ -155,3 +155,11 @@ Scripts to increase or decrease volume for debian and arch.
 ### config
 
 My main config which contains varied features
+
+## Manjaro
+
+If you want to use Manjaro's default config, you need to install:
+
+```
+ sudo pacman -S clipit xfce4-power-manager i3status pcmanfm i3-scrot i3exit
+```

@@ -12,7 +12,11 @@ set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font Iosevka 10
+# font Iosevka 16
+font xft:URWGothic-Book 11
+default_border pixel 1
+default_floating_border normal
+hide_edge_borders none
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -29,16 +33,28 @@ font Iosevka 10
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Shift+Return exec /usr/local/bin/kitty
+bindsym $mod+Shift+Return exec /usr/bin/alacritty
 
 # kill focused window
-bindsym $mod+q kill
+bindsym $mod+Shift+q kill
 
 # bindsym $mod+d exec --no-startup-id rofi -combi-modi drun,run -show combi
 bindsym $mod+d exec --no-startup-id  rofi -show run -modi "run"
 bindsym $mod+Shift+d exec --no-startup-id rofi -show window
 bindsym $mod+Shift+s exec --no-startup-id rofi -show ssh -modi "ssh"
 bindsym Mod1+Tab exec --no-startup-id rofi -show window
+bindsym $mod+F2 exec firefox
+bindsym $mod+F3 exec pcmanfm
+# 提供淡入淡出的功能 fade in&out effects
+bindsym $mod+Shift+t exec --no-startup-id pkill compton
+bindsym $mod+Ctrl+t exec --no-startup-id compton -b
+# Notification tool
+bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
+bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
+# bindsym Print exec --no-startup-id i3-scrot
+# bindsym $mod+Print --release exec --no-startup-id i3-scrot -w
+# bindsym $mod+Shift+Print --release exec --no-startup-id i3-scrot -s
+
 
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
@@ -70,10 +86,11 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
-bindsym $mod+h split h
+bindsym $mod+h split h;exec notify-send 'tile horizontally'
 
 # split in vertical orientation
-bindsym $mod+v split v
+bindsym $mod+v split v;exec notify-send 'tile vertically'
+bindsym $mod+q split toggle
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
@@ -140,6 +157,9 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m '真他妈要退出吗?.' -b '是啊，滚吧。' 'i3-msg exit'"
+
+
+# bindsym $mod+9 exec --no-startup-id blurlock
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -227,17 +247,21 @@ bindsym $mod+period workspace next
 
 
 # Special system mode
-set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate
-mode "$mode_system" {
-  bindsym l exec --no-startup-id light-locker-command -l, mode "default"
-  bindsym e exec --no-startup-id i3-msg exit, mode "default"
-  bindsym s exec --no-startup-id systemctl suspend, mode "default"
-  bindsym h exec --no-startup-id systemctl hibernate, mode "default"
-# back to normal
-  bindsym Return mode "default"
-  bindsym Escape mode "default"
-}
 bindsym $mod+Alt_R mode "$mode_system"
+set $mode_system (l)ock, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
+mode "$mode_system" {
+    bindsym l exec --no-startup-id i3exit lock, mode "default"
+    bindsym s exec --no-startup-id i3exit suspend, mode "default"
+    bindsym u exec --no-startup-id i3exit switch_user, mode "default"
+    bindsym e exec --no-startup-id i3exit logout, mode "default"
+    bindsym h exec --no-startup-id i3exit hibernate, mode "default"
+    bindsym r exec --no-startup-id i3exit reboot, mode "default"
+    bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
+
+    # exit system mode: "Enter" or "Escape"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
 
 # Set background
 #exec_always --no-startup-id nitrogen --restore
@@ -249,51 +273,39 @@ exec --no-startup-id ~/.config/i3/bin/i3nag.sh
 #exec --no-startup-id ~/.config/i3/bin/wallpaper.sh
 # Network Applet
 exec --no-startup-id nm-applet
+exec --no-startup-id xfce4-power-manager
+exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec --no-startup-id nitrogen --restore; sleep 1; compton -b
 # Redshift Applet
 #exec --no-startup-id systemctl --user start redshift-gtk
-
-
-
-# Workspace music
-bindsym $mod+m workspace "music"
-bindsym $mod+Shift+m move container to workspace "music"
-
-# Set workspace name
-bindsym $mod+t exec i3-input -F 'rename workspace to %s' -P 'New name: '
-
-# Music control
-# Special music mode
-set $music Music (n) next, (b) prev, (p) play/pause
-mode "$music" {
-  bindsym n exec --no-startup-id cmus-remote --next && pkill --signal SIGRTMIN+13 i3blocks, mode "default"
-  bindsym b exec --no-startup-id cmus-remote --prev && pkill --signal SIGRTMIN+13 i3blocks, mode "default"
-  bindsym p exec --no-startup-id cmus-remote --pause && pkill --signal SIGRTMIN+13 i3blocks, mode "default"
-
-# back to normal
-  bindsym Return mode "default"
-  bindsym Escape mode "default"
-
-}
-# Emergency start cmus
-bindsym $mod+Shift+Tab exec screen -S cmus -d -m cmus && pkill --signal SIGRTMIN+13 i3blocks
-bindsym $mod+Tab mode "$music"
-
-# Compositing Manager
-#exec --no-startup-id compton -b
-# Tiling Window Manager Notification Daemon
-#exec --no-startup-id twmnd
-# Set color Profile
-#exec --no-startup-id xcalib -d :0 /home/yash/.color/icc/Seiko.icc
+# autolock
+exec --no-startup-id xautolock -time 120 -locker blurlock
+# package management
+exec --no-startup-id pamac-tray
+# clipboard manager
+exec --no-startup-id clipit
+# start conky
+exec --no-startup-id ~/.config/i3/bin/start_conky_maia
+# fix xcursor
+exec_always --no-startup-id ~/.config/i3/bin/fix_xcursor
 
 
 # Move workspaces between output
 bindsym $mod+y move workspace to output left
 
 # Colors
-client.focused          #c6ff00 #c6ff00 #000000 #dddddd
-client.focused_inactive #333333 #333333 #c6ff00 #ffffff
-client.unfocused        #333333 #333333 #888888 #292d2e
-client.urgent           #2f343a #900000 #ffffff #900000
+# client.focused          #c6ff00 #c6ff00 #000000 #dddddd
+# client.focused_inactive #333333 #333333 #c6ff00 #ffffff
+# client.unfocused        #333333 #333333 #888888 #292d2e
+# client.urgent           #2f343a #900000 #ffffff #900000
+
+  client.focused          #556064 #556064 #80FFF9 #FDF6E3
+  client.focused_inactive #2F3D44 #2F3D44 #1ABC9C #454948
+  client.unfocused        #2F3D44 #2F3D44 #1ABC9C #454948
+  client.urgent           #CB4B16 #FDF6E3 #1ABC9C #268BD2
+  client.placeholder      #000000 #0c0c0c #ffffff #000000 
+
+  client.background       #2B2C2B
 
 #assign [class=".*(F|f)irefox.*"] $workspace1
 #assign [class="chromium"] $workspace1
@@ -307,8 +319,8 @@ client.urgent           #2f343a #900000 #ffffff #900000
 #for_window [class="^Vivaldi$"] move to $workspace9
 #for_window [class="^netease.*"] move to "music"
 
-gaps outer 5
-gaps inner 10
+gaps outer -2
+gaps inner 14
 
 smart_gaps on
 smart_borders no_gaps
